@@ -76,7 +76,7 @@ class MainWindow(qtw.QWidget):  # The MainWindow class will hold all the visual 
 		Function which stores the numbers pressed into the calculator
 		:param key_number: The number pressed
 		"""
-		if "=" in self.result_field.text():  # Automatically clears the calculator screen with new input after final output
+		if "=" in self.result_field.text() or "ERROR" in self.result_field.text():  # Automatically clears the calculator screen with new input after final output
 			self.clear_calc()
 		self.temp_nums.append(key_number)  # Stores each input number into a list which is then joined into a string
 		temp_string = ''.join(self.temp_nums)
@@ -105,6 +105,8 @@ class MainWindow(qtw.QWidget):  # The MainWindow class will hold all the visual 
 			self.result_field.setText("ERROR: No input!")
 		elif fin_string[-1] in MainWindow.operators_list:  # Prevents a crash where the user tries to calculate with no secondary input
 			self.result_field.setText("ERROR: No secondary input!")
+		elif fin_string[-2] + fin_string[-1] == "/0":
+			self.result_field.setText("ERROR: Dividing by 0!")
 		else:	
 			result_string = eval(fin_string)  # This calculates the string as if it's code
 			fin_string += "="

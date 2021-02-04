@@ -40,10 +40,12 @@ class MainWindow(qtw.QWidget):  # The MainWindow class will hold all the visual 
 		btn_2 = qtw.QPushButton("2", clicked = lambda:self.num_press("2"))
 		btn_1 = qtw.QPushButton("1", clicked = lambda:self.num_press("1"))
 		btn_0 = qtw.QPushButton("0", clicked = lambda:self.num_press("0"))
+		btn_dec = qtw.QPushButton(".", clicked = lambda:self.num_press("."))
 		btn_plus = qtw.QPushButton("+", clicked = lambda:self.func_press("+"))
 		btn_minus = qtw.QPushButton("-", clicked = lambda:self.func_press("-"))
 		btn_mult = qtw.QPushButton("*", clicked = lambda:self.func_press("*"))
 		btn_divd = qtw.QPushButton("/", clicked = lambda:self.func_press("/"))
+		btn_pow = qtw.QPushButton("^", clicked = lambda:self.func_press("**"))
 
 
 		# Adding the created buttons to the layout
@@ -62,7 +64,9 @@ class MainWindow(qtw.QWidget):  # The MainWindow class will hold all the visual 
 		container.layout().addWidget(btn_2, 4, 1)
 		container.layout().addWidget(btn_1, 4, 2)
 		container.layout().addWidget(btn_mult, 4, 3)
-		container.layout().addWidget(btn_0, 5, 0, 1, 3)
+		container.layout().addWidget(btn_0, 5, 0)
+		container.layout().addWidget(btn_dec, 5, 1)
+		container.layout().addWidget(btn_pow, 5, 2)
 		container.layout().addWidget(btn_divd, 5, 3)
 
 		self.layout().addWidget(container)  # This actually puts the widgets (elements) on the main window
@@ -72,6 +76,8 @@ class MainWindow(qtw.QWidget):  # The MainWindow class will hold all the visual 
 		Function which stores the numbers pressed into the calculator
 		:param key_number: The number pressed
 		"""
+		if "=" in self.result_field.text():  # Automatically clears the calculator screen with new input after final output
+			self.clear_calc()
 		self.temp_nums.append(key_number)  # Stores each input number into a list which is then joined into a string
 		temp_string = ''.join(self.temp_nums)
 		if self.fin_nums:  # Checks if the secondary input is already empty
